@@ -1,0 +1,148 @@
+openapi: 3.0.0
+info:
+  title: CRUD API
+  version: 1.0.0
+tags:
+  - name: CRUD methods api
+    description: API для операций CRUD с продуктами
+paths:
+  /api/product/{id}:
+    get:
+      summary: Получить продукт по ID
+      description: Получение продукта по его идентификатору.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Идентификатор продукта.
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+  /api/product/all:
+    get:
+      summary: Получить все продукты
+      description: Получение списка всех продуктов.
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+  /api/product/delete/{id}:
+    delete:
+      summary: Удалить продукт по ID
+      description: Удаление продукта по его идентификатору.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Идентификатор продукта.
+      responses:
+        '200':
+          description: Успешный ответ
+        '404':
+          description: Продукт не найден
+  /api/product/create:
+    post:
+      summary: Добавить новый продукт
+      description: Добавление нового продукта.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+      responses:
+        '200':
+          description: Успешный ответ
+  /api/product/update/{id}:
+    put:
+      summary: Обновить продукт по ID
+      description: Обновление продукта по его идентификатору.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Идентификатор продукта.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '200':
+          description: Успешный ответ
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier of the product.
+        name:
+          type: string
+          description: The name of the product.
+        articular:
+          type: string
+          description: The unique identifier of the product (unique constraint).
+        description:
+          type: string
+          description: The description of the product.
+        category:
+          type: string
+          description: The category of the product.
+        cost:
+          type: number
+          format: double
+          description: The cost of the product.
+        amount:
+          type: integer
+          description: The amount of the product.
+        created:
+          type: string
+          format: date-time
+          description: The timestamp when the product was created.
+        updatedOn:
+          type: string
+          format: date-time
+          description: The timestamp when the product was last updated (nullable).
+
+    ProductRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the product.
+        articular:
+          type: string
+          description: The unique identifier of the product (unique constraint).
+        description:
+          type: string
+          description: The description of the product.
+        category:
+          type: string
+          description: The category of the product.
+        cost:
+          type: number
+          format: double
+          description: The cost of the product.
+        amount:
+          type: integer
+          description: The amount of the product.

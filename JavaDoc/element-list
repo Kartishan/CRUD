@@ -1,0 +1,7 @@
+com.kartishan.crud
+com.kartishan.crud.controller
+com.kartishan.crud.exceptions
+com.kartishan.crud.model
+com.kartishan.crud.repository
+com.kartishan.crud.request
+com.kartishan.crud.service

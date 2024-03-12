@@ -1,0 +1,36 @@
+version: "3.1"
+
+volumes:
+  pg_crud:
+
+services:
+  crud_db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=crud_db
+    volumes:
+      - pg_crud:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - my_network
+
+  app:
+    restart: always
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - crud_db
+    environment:
+      SPRING_DATASOURCE_URL: 'jdbc:postgresql://crud_db:5432/crud_db'
+      JAVA_OPTS: '-Xmx512m'
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
