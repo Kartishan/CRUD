@@ -1,0 +1,337 @@
+{
+	"info": {
+		"_postman_id": "71eea708-e152-44fd-99e5-1ccff6440c7d",
+		"name": "CRUD",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24143586",
+		"_collection_link": "https://interstellar-rocket-711779.postman.co/workspace/CRUD-TEST~e7596d1e-a981-42a0-8e5f-1362b5bcc030/collection/24143586-71eea708-e152-44fd-99e5-1ccff6440c7d?action=share&source=collection_link&creator=24143586"
+	},
+	"item": [
+		{
+			"name": "CRUD",
+			"item": [
+				{
+					"name": "create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response body contains 'Продукт добавлен'\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Продукт добавлен\");",
+									"});",
+									"",
+									"",
+									"",
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Response body contains expected error message\", function () {",
+									"    pm.expect(pm.response.json()).to.eql({",
+									"        \"statusCode\": 400,",
+									"        \"message\": \"Не удалось добавить продукт.\",",
+									"        \"timestamp\": pm.response.json().timestamp",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Status code is 409\", function () {",
+									"    pm.response.to.have.status(409);",
+									"});",
+									"",
+									"pm.test(\"Response body contains expected error message\", function () {",
+									"    pm.expect(pm.response.json()).to.eql({",
+									"        \"statusCode\": 409,",
+									"        \"message\": \"Продукт с таким артикулом уже существует.\",",
+									"        \"timestamp\": pm.response.json().timestamp",
+									"    });",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"test2\",\r\n  \"articular\": \"test4\",\r\n  \"description\": \"test\",\r\n  \"category\": \"test\",\r\n  \"cost\": 10,\r\n  \"amount\": 10\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/product/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"product",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has the required fields\", function () {\r",
+									"  pm.expect(pm.response.text()).to.include(\"Продукт обновлен\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 404 for non-existing product\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'не найден'\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"не найден\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'Bad Request'\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Bad Request\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 409\", function () {\r",
+									"    pm.response.to.have.status(409);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains expected error message\", function () {\r",
+									"    pm.expect(pm.response.json()).to.eql({\r",
+									"        \"statusCode\": 409,\r",
+									"        \"message\": \"Продукт с таким артикулом уже существует.\",\r",
+									"        \"timestamp\": pm.response.json().timestamp\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"newTestName\",\r\n    \"articular\": \"test4\",\r\n    \"description\": \"newTestDescription\",\r\n    \"category\": \"newTestCategory\",\r\n    \"cost\": 5,\r\n    \"amount\": 55\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/product/update/30c9b79f-82bd-4f3b-83c0-07ce14bbf360",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"product",
+								"update",
+								"30c9b79f-82bd-4f3b-83c0-07ce14bbf360"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has the required fields\", function () {\r",
+									"    pm.expect(pm.response.json()).to.have.all.keys('id', 'name', 'articular', 'description', 'category', 'cost', 'amount', 'created', 'updatedOn');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 404 for non-existing product\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains expected error message for non-existing product\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"не найден\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Bad Request\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Bad Request\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/product/30c9b79f-82bd-4f3b-83c0-07ce14bbf360ы",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"product",
+								"30c9b79f-82bd-4f3b-83c0-07ce14bbf360ы"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has the required fields\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"    \r",
+									"    responseData.forEach(function(product) {\r",
+									"        pm.expect(product).to.include.all.keys('id', 'name', 'articular', 'description', 'category', 'cost', 'amount', 'created', 'updatedOn');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is an array\", function () {\r",
+									"    pm.expect(pm.response.json()).to.be.an('array');\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/product/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"product",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'Продукт удален'\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Продукт удален\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 404 for non-existing product\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains expected error message for non-existing product\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"не найден\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/product/delete/99314738-d303-4d1a-a818-cde5754b61dd",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"product",
+								"delete",
+								"99314738-d303-4d1a-a818-cde5754b61dd"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
