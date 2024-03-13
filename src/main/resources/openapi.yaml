@@ -2,12 +2,16 @@ openapi: 3.0.0
 info:
   title: CRUD API
   version: 1.0.0
+servers:
+  - url: http://localhost:8080
 tags:
   - name: CRUD methods api
     description: API для операций CRUD с продуктами
 paths:
   /api/product/{id}:
     get:
+      tags:
+        - CRUD methods api
       summary: Получить продукт по ID
       description: Получение продукта по его идентификатору.
       parameters:
@@ -24,8 +28,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
+        '404':
+          description: Продукт не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
   /api/product/all:
     get:
+      tags:
+        - CRUD methods api
       summary: Получить все продукты
       description: Получение списка всех продуктов.
       responses:
@@ -37,8 +50,17 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Product'
+        '400':
+          description: Не удалось получить продукты
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
   /api/product/delete/{id}:
     delete:
+      tags:
+        - CRUD methods api
       summary: Удалить продукт по ID
       description: Удаление продукта по его идентификатору.
       parameters:
@@ -51,10 +73,28 @@ paths:
       responses:
         '200':
           description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Продукт удален"
+        '400':
+          description: Ошибка при удалении продукта
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '404':
           description: Продукт не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
   /api/product/create:
     post:
+      tags:
+        - CRUD methods api
       summary: Добавить новый продукт
       description: Добавление нового продукта.
       requestBody:
@@ -66,8 +106,28 @@ paths:
       responses:
         '200':
           description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Продукт добавлен"
+        '400':
+          description: Не удалось добавить продукт.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Продукт с таким артикулом уже существует."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
   /api/product/update/{id}:
     put:
+      tags:
+        - CRUD methods api
       summary: Обновить продукт по ID
       description: Обновление продукта по его идентификатору.
       parameters:
@@ -86,6 +146,29 @@ paths:
       responses:
         '200':
           description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Продукт обновлен"
+        '400':
+          description: Ошибка при обновлении продукта с id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Продукт не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Продукт с таким артикулом уже существует."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
 components:
   schemas:
@@ -95,54 +178,68 @@ components:
         id:
           type: string
           format: uuid
-          description: The unique identifier of the product.
+          description: Уникальный идентификатор продукта.
         name:
           type: string
-          description: The name of the product.
+          description: Название продукта.
         articular:
           type: string
-          description: The unique identifier of the product (unique constraint).
+          description: Уникальный идентификатор продукта.
         description:
           type: string
-          description: The description of the product.
+          description: Описание продукта.
         category:
           type: string
-          description: The category of the product.
+          description: Категория продукта.
         cost:
           type: number
           format: double
-          description: The cost of the product.
+          description: Стоимость продукта.
         amount:
           type: integer
-          description: The amount of the product.
+          description: Количество продукта.
         created:
           type: string
           format: date-time
-          description: The timestamp when the product was created.
+          description: Метка времени создания продукта.
         updatedOn:
           type: string
           format: date-time
-          description: The timestamp when the product was last updated (nullable).
+          description: Метка времени последнего обновления продукта (Меняется только при обновлении количества).
 
     ProductRequest:
       type: object
       properties:
         name:
           type: string
-          description: The name of the product.
+          description: Название продукта.
         articular:
           type: string
-          description: The unique identifier of the product (unique constraint).
+          description: Уникальный идентификатор продукта.
         description:
           type: string
-          description: The description of the product.
+          description: Описание продукта.
         category:
           type: string
-          description: The category of the product.
+          description: Категория продукта.
         cost:
           type: number
           format: double
-          description: The cost of the product.
+          description: Стоимость продукта.
         amount:
           type: integer
-          description: The amount of the product.
+          description: Количество продукта.
+
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          description: Код состояния HTTP.
+        message:
+          type: string
+          description: Текст сообщения об ошибке.
+        timestamp:
+          type: string
+          format: date-time
+          description: Временная метка ошибки.
