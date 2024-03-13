@@ -18,7 +18,7 @@ docker-compose up -d
 
 ## SWAGGER
 Swagger находится в папке main\\resources\\openapi.yaml </br>
-[Открыть swagger](src\main\resources\openapi.yaml)
+[Открыть swagger](src/main/resources/openapi.yaml) 
 
 ## Коллекция запросов PostMan
 Заросы находятся в файле: CRUD.postman_collection.json </br>
@@ -26,23 +26,23 @@ Swagger находится в папке main\\resources\\openapi.yaml </br>
 
 ## UNIT TESTS
 Юнит тесты находятся в src\test\java\com\kartishan\crud\
-Для их запуска надо ввести mvn test в корневой директории проекта.
+Для их запуска надо ввести команду mvn test в корневой директории проекта.
 
 ### Запросы:
 
 #### Запрос на **получение** товара по его id
 ```yaml
-    http://localhost:8080/api/product/{id}
+http://localhost:8080/api/product/{id}
 ```
 
 #### Запрос на **получение всех** товаров по его id
 ```yaml
-    http://localhost:8080/api/product/all 
+http://localhost:8080/api/product/all 
 ```
 
 #### Запрос на **удаление** товара по его id
 ```yaml 
-    http://localhost:8080/api/product/delete/{id} 
+http://localhost:8080/api/product/delete/{id} 
 ```
 #### Запрос на **создание** товара по его id
 ```yaml
@@ -67,12 +67,12 @@ http://localhost:8080/api/product/update/{id}
 Пример тела запроса:
 ```json
 {
-"name": "newTestName",
-"articular": "newTestArticular",
-"description": "newTestDescription",
-"category": "newTestCategory",
-"cost": 5,
-"amount": 55
+    "name": "newTestName",
+    "articular": "newTestArticular",
+    "description": "newTestDescription",
+    "category": "newTestCategory",
+    "cost": 5,
+    "amount": 55
 }
 ```
 
